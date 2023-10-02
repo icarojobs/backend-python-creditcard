@@ -12,6 +12,7 @@ from passlib.context import CryptContext
 
 crypt_context = CryptContext(schemes=['sha256_crypt'])
 
+
 class UserUseCases:
     def __init__(self, db_session: Session):
         self.db_session = db_session
