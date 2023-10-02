@@ -4,7 +4,6 @@ O objetivo desse repositório é realizar o teste em Python (Programador Backend
 ### TECNOLOGIAS UTILIZADAS
  - Docker + Docker Compose
  - Python 3.10.x
- - pipenv
  - FastAPI + uvcorn
  - SqlAlchemy (ORM)
  - psycopg2-binary (conexão com Postgres)
@@ -16,7 +15,7 @@ O objetivo desse repositório é realizar o teste em Python (Programador Backend
 
 A escolha de montar o ambiente de desenvolvimento utilizando Docker com Docker Compose foi por basicamente 2 motivo: O primeiro motivo é que o meu ambiente de desenvolvimento vai ser muito parecido com o de produção e o segundo motivo é que meus colegas de trabalho podem executar esse ambiente facilmente se estiverem em um ambiente linux/unix/mac caso tenham do `Docker` + `docker-compose` devidamente instalados.
 
-A opção de utilizar o `pipenv` ao invés do `pip` foi simplesmente pelo fato de se tratar de um gerenciados de dependências mais moderno, ou seja, não preciso criar um `requirements.txt` pra controlar minhas dependências e ainda já vou ter um ambiente virtual (virtualenv) prontinho pra ser utilizado.
+A princípio, eu tinha optado por utilizar `pipenv` por ele já criar um `ambiente virtual`, mas por algum motivo que não consegui entender, os o `FastAPI` não estava subindo corretamente. Então optei por utilizar o bom e velho `pip` com o arquivo `requirements.txt`. Pensando mais a fundo, o próprio docker já separa as dependências de desenvolvimento com as globais do sistema operacional, então não precisaria de um virtualenv.
 
 Com base no que estudei recentemente, como o teste pede para criar somente uma API (e não uma solução web fullstack completa), decidi optar pelo framework [FastAPI](https://fastapi.tiangolo.com/), pois se trata de uma solução simples, rápida e extremamente escalável caso necessário.
 
@@ -37,47 +36,23 @@ Verificando status do container:
 docker-compose ps
 ```
 
-Acessando terminal do container (para instalação de dependencias + subir uvicorn):
-```bash
-docker-compose exec -it app sh
-```
-
-Instalando dependências do projeto (através do terminal do container)
-```bash
-pipenv install
-```
-
-Instalando dependências adicionais (através do terminal do container):
-```bash
-pipenv install nome-da-dependencia
-
-# exemplo usado nesse projeto:
-
-pipenv install fastapi uvicorn sqlalchemy psycopg2-binary alembic python-decouple passlib python-jose python-multipart
-```
-
-Ativando virtualenv:
-```bash
-pipenv shell
-```
-
-Executando servidor uvicorn (para subir a API):
-```bash
-docker-compose exec -it app sh
-pipenv shell
-
-uvicorn main:app
-
-# Ou execute com recarregamento automático quando algum arquivo for modificado:
-uvicorn main:app --reload
-```
 
 Acessando projeto no browser:
 ```
 http://127.0.0.1:8000
 ```
 
+Acessando terminal do container:
+```bash
+docker-compose exec -it app sh
+```
+
 Comando para reconstruir os containers em caso de erros ou modificações no Dockerfile:
 ```bash
-docker-compose build --no-cache
+docker-compose build --no-cache && docker-compose up --force-recreate -d
+```
+
+Caso queira parar o container, basta digitar o seguinte comando:
+```bash
+docker-compose down
 ```
