@@ -1,4 +1,3 @@
-from fastapi import Depends
 from database.connection import Session
 
 
