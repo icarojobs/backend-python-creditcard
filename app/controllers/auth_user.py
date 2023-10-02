@@ -1,11 +1,19 @@
+from datetime import datetime
+from datetime import timedelta
+import pytz
+
+UTC = pytz.utc
+
 import sys
 
 sys.path.append('../../')
 
+from decouple import config
 from fastapi.exceptions import HTTPException
 from fastapi import status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
+from jose import jwt
 from app.models.user_model import UserModel
 from app.database.schemas import User
 from passlib.context import CryptContext
@@ -31,3 +39,27 @@ class UserUseCases:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="User already exists",
             ) from e
+
+    def user_login(self, user: User, expires_in: int = 30):
+        found_user = self.db_session.query(UserModel).filter_by(username=user.username).first()
+
+        if found_user is None or not crypt_context.verify(user.password, found_user.password):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="The credentials provided were not authorized."
+            )
+
+        expiration_time = datetime.now(UTC) + timedelta(minutes=expires_in)
+        exp = expiration_time.strftime('%Y-%m-%d %H:%M:%S')
+
+        payload = {
+            "sub": found_user.username,
+            "exp": exp
+        }
+
+        access_token = jwt.encode(payload, config('SECRET_KEY'), algorithm=config('ALGORITHM'))
+
+        return {
+            "access_token": access_token,
+            "expiration": exp
+        }
