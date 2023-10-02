@@ -45,3 +45,8 @@ pipenv install nome-da-dependencia
 
 pipenv install fastapi uvicorn sqlalchemy psycopg2-binary alembic python-decouple passlib python-jose python-multipart
 ```
+
+Ativando virtualenv:
+```bash
+pipenv shell
+```
