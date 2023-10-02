@@ -107,3 +107,13 @@ Não é possível registrar 2 usuários com mesmo nome, pois vamos obter o segui
 ```
 User already exists
 ```
+
+### PROBLEMAS A SEREM RESOLVIDOS (ISSUES)
+1. Não sei por qual motivo o endpoint `/v1/credit-cards` (em [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)) não está conseguindo colocar o Bearer Token no cabeçalho para enviar as requisições. Ele deixa o token como "undefined". Exemplo:
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/v1/credit-cards' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer undefined'
+```
+Se testar a API em um REST-Client (Postman, Insomnia, etc) funciona normalmente, bastando cadastrar o usuário, fazer o login e, em seguida, consumir o endpoint `[GET] /v1/credit-cards`
