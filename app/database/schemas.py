@@ -1,6 +1,7 @@
 import re
 from pydantic import BaseModel
 from pydantic import field_validator
+from pydantic import ValidationError
 
 
 class User(BaseModel):
@@ -8,7 +9,8 @@ class User(BaseModel):
     password: str
 
     @field_validator('username')
+    @classmethod
     def validate_username(cls, value):
-        if not re.match('^([a-z][0-9]|@)+$', value):
-            raise ValueError("The username format is invalid.")
+        if '@' in value:
+            raise ValidationError("The username format is invalid. Dont use email to register.")
         return value

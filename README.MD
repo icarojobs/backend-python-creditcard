@@ -81,3 +81,15 @@ Para aplicar uma migração (criar de fato no banco de dados), execute o seguint
 ```bash
 docker-compose exec app alembic upgrade head
 ```
+
+### USO DA API
+Usuários não podem ser e-mails, ou seja, não pode conter @:
+```
+icarowilliam2023 # correto
+icaro@teste.com # errado
+```
+
+Não é possível registrar 2 usuários com mesmo nome, pois vamos obter o seguinte erro:
+```
+User already exists
+```
