@@ -63,3 +63,16 @@ Para executar os testes, basta digitar o seguinte comando:
 ```bash
 docker-compose exec app pytest
 ```
+
+Para criar novos arquivos de migração (migration), execute o seguinte comando:
+```bash
+docker-compose exec app alembic revision --autogenerate -m "migration name"
+
+# Exemplo usado nesse projeto:
+docker-compose exec app alembic revision --autogenerate -m "add users table"
+```
+
+Para aplicar uma migração (criar de fato no banco de dados), execute o seguinte comando:
+```bash
+docker-compose exec app alembic upgrade head
+```
