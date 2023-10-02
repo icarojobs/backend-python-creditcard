@@ -94,6 +94,7 @@ Para aplicar uma migração (criar de fato no banco de dados), execute o seguint
 ```bash
 docker-compose exec app alembic upgrade head
 ```
+Atenção: Esse comando é obrigatório sempre que baixar o repo em um novo computador ou reconstruir seus containers.
 
 ### USO DA API
 Usuários não podem ser e-mails, ou seja, não pode conter @:

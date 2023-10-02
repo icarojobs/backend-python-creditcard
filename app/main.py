@@ -3,8 +3,8 @@ import sys
 sys.path.append('..')
 
 from fastapi import FastAPI
-# from routes.v1.api import router
-from app.routes.v1.api import router
+from app.routes.v1.api import user_router
+from app.routes.v1.api import credit_card_router
 
 app = FastAPI(title="MaisTODOS CreditCard API")
 
@@ -14,4 +14,5 @@ def index():
     return {"ping": "pong!"}
 
 
-app.include_router(router)
+app.include_router(user_router)
+app.include_router(credit_card_router)
