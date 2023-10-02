@@ -7,3 +7,5 @@ python-decouple
 passlib
 python-jose
 python-multipart
+pytest
+httpx

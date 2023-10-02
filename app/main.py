@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-app = FastAPI(title = "MaisTODOS CreditCard API")
+app = FastAPI(title="MaisTODOS CreditCard API")
 
 
 @app.get("/")

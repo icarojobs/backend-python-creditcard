@@ -12,6 +12,7 @@ O objetivo desse repositório é realizar o teste em Python (Programador Backend
  - passlib (criptografia de senhas)
  - python-jose (pra trabalhar com JWT)
  - python-multipart (pra trabalhar com form de login)
+ - pytest (para testes unitários e de integração)
 
 A escolha de montar o ambiente de desenvolvimento utilizando Docker com Docker Compose foi por basicamente 2 motivo: O primeiro motivo é que o meu ambiente de desenvolvimento vai ser muito parecido com o de produção e o segundo motivo é que meus colegas de trabalho podem executar esse ambiente facilmente se estiverem em um ambiente linux/unix/mac caso tenham do `Docker` + `docker-compose` devidamente instalados.
 
@@ -55,4 +56,9 @@ docker-compose build --no-cache && docker-compose up --force-recreate -d
 Caso queira parar o container, basta digitar o seguinte comando:
 ```bash
 docker-compose down
+```
+
+Para executar os testes, basta digitar o seguinte comando:
+```bash
+docker-compose exec app pytest
 ```
