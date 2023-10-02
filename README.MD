@@ -34,4 +34,8 @@ pipenv install
 Instalando dependências adicionais (através do terminal do container):
 ```bash
 pipenv install nome-da-dependencia
+
+# exemplo usado nesse projeto:
+
+pipenv install fastapi uvicorn sqlalchemy
 ```
