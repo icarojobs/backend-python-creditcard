@@ -5,8 +5,14 @@ O objetivo desse repositório é realizar o teste em Python (Programador Backend
  - Docker + Docker Compose
  - Python 3.10.x
  - pipenv
- - FastAPI + uvcorn + JWT
+ - FastAPI + uvcorn
  - SqlAlchemy (ORM)
+ - psycopg2-binary (conexão com Postgres)
+ - alembic (para migrations)
+ - python-decouple (variáveis de ambiente)
+ - passlib (criptografia de senhas)
+ - python-jose (pra trabalhar com JWT)
+ - python-multipart (pra trabalhar com form de login)
 
 A escolha de montar o ambiente de desenvolvimento utilizando Docker com Docker Compose foi por basicamente 2 motivo: O primeiro motivo é que o meu ambiente de desenvolvimento vai ser muito parecido com o de produção e o segundo motivo é que meus colegas de trabalho podem executar esse ambiente facilmente se estiverem em um ambiente linux/unix/mac caso tenham do `Docker` + `docker-compose` devidamente instalados.
 
@@ -37,5 +43,5 @@ pipenv install nome-da-dependencia
 
 # exemplo usado nesse projeto:
 
-pipenv install fastapi uvicorn sqlalchemy
+pipenv install fastapi uvicorn sqlalchemy psycopg2-binary alembic python-decouple passlib python-jose python-multipart
 ```
