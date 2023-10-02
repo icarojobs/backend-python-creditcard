@@ -36,3 +36,7 @@ def test_register_new_user():
 
 def test_if_user_exists():
     pass
+
+
+def test_if_user_login_works():
+    pass

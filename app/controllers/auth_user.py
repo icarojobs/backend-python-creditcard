@@ -50,16 +50,15 @@ class UserUseCases:
             )
 
         expiration_time = datetime.now(UTC) + timedelta(minutes=expires_in)
-        exp = expiration_time.strftime('%Y-%m-%d %H:%M:%S')
 
         payload = {
             "sub": found_user.username,
-            "exp": exp
+            "exp": expiration_time
         }
 
         access_token = jwt.encode(payload, config('SECRET_KEY'), algorithm=config('ALGORITHM'))
 
         return {
             "access_token": access_token,
-            "expiration": exp
+            "expiration": expiration_time.isoformat()
         }
