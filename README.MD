@@ -13,3 +13,5 @@ Com base no que estudei recentemente, como o teste pede para criar somente uma A
 
 Também optei por utilizar um ORM, no caso [SqlAlchemy](https://www.sqlalchemy.org/) para evitar de escrever queries SQL na mão, isso vai resultar em um código mais limpo e de fácil manutenção, por se tratar de um código 100% Python.
 
+### AMBIENTE DE DESENVOLVIMENTO
+Na raiz do projeto você vai encontrar o arquivo `docker-compose.yml` e o diretório `/docker` que são os responsáveis por criar toda estrutura necessária para o desenvolvimento desse projeto.
