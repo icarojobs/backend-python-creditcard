@@ -63,8 +63,21 @@ pipenv shell
 
 Executando servidor uvicorn (para subir a API):
 ```bash
+docker-compose exec -it app sh
+pipenv shell
+
 uvicorn main:app
 
 # Ou execute com recarregamento automático quando algum arquivo for modificado:
 uvicorn main:app --reload
+```
+
+Acessando projeto no browser:
+```
+http://127.0.0.1:8000
+```
+
+Comando para reconstruir os containers em caso de erros ou modificações no Dockerfile:
+```bash
+docker-compose build --no-cache
 ```
