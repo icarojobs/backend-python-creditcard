@@ -28,6 +28,19 @@ A opção de escolher o JWT para realizar autenticação é pelo fato de ter uma
 Na raiz do projeto você vai encontrar o arquivo `docker-compose.yml` e `Dockerfile` que são os responsáveis por criar toda estrutura necessária para o desenvolvimento desse projeto.
 Antes de iniciar o projeto, faça uma cópia do arquivo `.env.example` para `.env` e gere sua criptografia HS256.
 
+Gerando criptografia para adicionar em `SECRET_KEY` do `.env`:
+```
+1. Acesse https://www.browserling.com/tools/random-hex
+2. Configure para 64 dígitos e 1 resultado
+3. Clique em Generate Hex
+4. Copie o resultado na chave SECRET_KEY
+
+OBS: Caso queira gerar via linha de comando, basta digitar:
+$ openssl rand -hex 64
+
+Pra fins de teste, já vou deixar a que utilizei no arquivo .env.example, mas fique a vontade pra trocar.
+```
+
 Executando container:
 ```bash
 docker-compose up -d

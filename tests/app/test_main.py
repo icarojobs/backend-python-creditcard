@@ -32,3 +32,7 @@ def test_register_new_user():
       "status": True,
       "message": "User registered successfully!"
     }
+
+
+def test_if_user_exists():
+    pass
