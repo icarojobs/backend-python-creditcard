@@ -26,6 +26,7 @@ A opção de escolher o JWT para realizar autenticação é pelo fato de ter uma
 
 ### AMBIENTE DE DESENVOLVIMENTO
 Na raiz do projeto você vai encontrar o arquivo `docker-compose.yml` e `Dockerfile` que são os responsáveis por criar toda estrutura necessária para o desenvolvimento desse projeto.
+Antes de iniciar o projeto, faça uma cópia do arquivo `.env.example` para `.env` e gere sua criptografia HS256.
 
 Executando container:
 ```bash
