@@ -40,3 +40,7 @@ def test_if_user_exists():
 
 def test_if_user_login_works():
     pass
+
+
+def test_user_login_with_wrong_password():
+    pass
