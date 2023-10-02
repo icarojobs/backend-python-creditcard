@@ -27,7 +27,17 @@ A opção de escolher o JWT para realizar autenticação é pelo fato de ter uma
 ### AMBIENTE DE DESENVOLVIMENTO
 Na raiz do projeto você vai encontrar o arquivo `docker-compose.yml` e o diretório `/docker` que são os responsáveis por criar toda estrutura necessária para o desenvolvimento desse projeto.
 
-Acessando terminal do container:
+Executando container:
+```bash
+docker-compose up -d
+```
+
+Verificando status do container:
+```bash
+docker-compose ps
+```
+
+Acessando terminal do container (para instalação de dependencias + subir uvicorn):
 ```bash
 docker-compose exec -it app sh
 ```
@@ -49,4 +59,12 @@ pipenv install fastapi uvicorn sqlalchemy psycopg2-binary alembic python-decoupl
 Ativando virtualenv:
 ```bash
 pipenv shell
+```
+
+Executando servidor uvicorn (para subir a API):
+```bash
+uvicorn main:app
+
+# Ou execute com recarregamento automático quando algum arquivo for modificado:
+uvicorn main:app --reload
 ```
