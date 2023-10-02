@@ -1,4 +1,8 @@
-from database.connection import Session
+import sys
+
+sys.path.append('..')
+
+from app.database.connection import Session
 
 
 def get_db_session():

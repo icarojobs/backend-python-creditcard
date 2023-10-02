@@ -10,7 +10,8 @@ from app.depends import get_db_session
 from app.controllers.auth_user import UserUseCases
 from app.database.schemas import User
 
-router = APIRouter(prefix='v1')
+router = APIRouter(prefix='/v1')
+
 
 @router.post('/users')
 def user_register(user: User, db_session: Session = Depends(get_db_session)):

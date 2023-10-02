@@ -1,5 +1,10 @@
+import sys
+
+sys.path.append('..')
+
 from fastapi import FastAPI
-from routes.v1.api import router
+# from routes.v1.api import router
+from app.routes.v1.api import router
 
 app = FastAPI(title="MaisTODOS CreditCard API")
 
