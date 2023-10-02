@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+app = FastAPI(title = "MaisTODOS CreditCard API")
 
 
 @app.get("/")
-def read_root():
+def index():
     return {"ping": "pong!"}
