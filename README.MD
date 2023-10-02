@@ -44,6 +44,11 @@ Acessando projeto no browser:
 http://127.0.0.1:8000
 ```
 
+Acessando a documentação da API:
+```
+http://127.0.0.1:8000/docs
+```
+
 Acessando terminal do container:
 ```bash
 docker-compose exec -it app sh
