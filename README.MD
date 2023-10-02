@@ -24,7 +24,7 @@ Também optei por utilizar um ORM, no caso [SqlAlchemy](https://www.sqlalchemy.o
 A opção de escolher o JWT para realizar autenticação é pelo fato de ter uma implementação simples e extremamente segura.
 
 ### AMBIENTE DE DESENVOLVIMENTO
-Na raiz do projeto você vai encontrar o arquivo `docker-compose.yml` e o diretório `/docker` que são os responsáveis por criar toda estrutura necessária para o desenvolvimento desse projeto.
+Na raiz do projeto você vai encontrar o arquivo `docker-compose.yml` e `Dockerfile` que são os responsáveis por criar toda estrutura necessária para o desenvolvimento desse projeto.
 
 Executando container:
 ```bash
