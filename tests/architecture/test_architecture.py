@@ -2,4 +2,5 @@ from decouple import config
 
 
 def test_smoke_test():
-    assert config('DB_URL') == "postgresql+psycopg2://database/main?user=admin&password=password"
+    DB_NAME = config('POSTGRES_DB')
+    assert config('DB_URL') == f"postgresql+psycopg2://database/{DB_NAME}?user=admin&password=password"

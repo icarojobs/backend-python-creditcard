@@ -2,6 +2,7 @@ import re
 from pydantic import BaseModel
 from pydantic import field_validator
 from pydantic import ValidationError
+from typing import Union, List
 
 
 class User(BaseModel):
@@ -30,7 +31,8 @@ class CreditCard(BaseModel):
             raise ValidationError("The exp_date is required.")
 
         # todo: get 30 (last day of month) dynamically
-        return f"{value}/30"
+        # return f"{value}/30"
+        return value
 
     @field_validator('holder')
     @classmethod
@@ -51,11 +53,12 @@ class CreditCard(BaseModel):
     @field_validator('cvv')
     @classmethod
     def validate_cvv(cls, value):
+        return value
         # business logic here...
-        if value is None:
-            return value
+        # if value is None:
+        #     return value
 
-        if len(value) in {3, 4}:
-            return value
-        else:
-            raise ValidationError("The cvv field needs 3 or 4 digits.")
+        # if len(value) >= 3:
+        #     return value
+        # else:
+        #     raise ValidationError("The cvv field needs 3 or 4 digits.")

@@ -5,15 +5,16 @@ sys.path.append('../../../')
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import status
+from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.depends import get_db_session
 from app.depends import token_verifier
 from app.use_cases.auth_user import UserUseCases
-from app.use_cases.credit_card import CreditCardUseCases
 from app.database.schemas import User
 from app.database.schemas import CreditCard
+from app.repositories.credit_card_repository import CreditCardRepository
 
 user_router = APIRouter(prefix='/v1')
 credit_card_router = APIRouter(prefix='/v1', dependencies=[Depends(token_verifier)])
@@ -52,31 +53,31 @@ def user_login(
 
 @credit_card_router.post('/credit-cards')
 def create_credit_card(credit_card: CreditCard, db_session: Session = Depends(get_db_session)):
-    use_case = CreditCardUseCases(db_session=db_session)
-    use_case.create_credit_card(credit_card=credit_card)
+    try:
+        repository = CreditCardRepository(db_session=db_session)
+        repository.create_credit_card(credit_card=credit_card)
 
-    return JSONResponse(
-        status_code=status.HTTP_201_CREATED,
-        content={"status": True, "message": "CreditCard added successfully!"}
-    )
+        return JSONResponse(
+            status_code=status.HTTP_201_CREATED,
+            content={"status": True, "message": "CreditCard created successfully!"}
+        )
+    except Exception as error:
+        raise HTTPException(
+            400, detail="Error when trying create new credit card."
+        ) from error
 
 
 @credit_card_router.get('/credit-cards')
-def get_credit_cards(db_session: Session = Depends(get_db_session)):
-    use_case = CreditCardUseCases(db_session=db_session)
-    result = use_case.get_credit_cards()
-    print('-----------------------------------------------------------')
-    print('credit_cards:')
-    print(result)
-    print('-----------------------------------------------------------')
-    #
-    # return JSONResponse(
-    #     status_code=status.HTTP_200_OK,
-    #     content={"status": True, "data": result}
-    # )
+def create_credit_card_test(db_session: Session = Depends(get_db_session)):
+    try:
+        repository = CreditCardRepository(db_session=db_session)
+        response = repository.get_credit_cards()
 
-    return JSONResponse(
-        status_code=status.HTTP_200_OK,
-        content={"status": True, "data": [{"id": 1, "card_id": "xpto"}]}
-    )
-
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"status": True, "data": response}
+        )
+    except Exception as error:
+        raise HTTPException(
+            400, detail="Error when trying to get all credit cards"
+        ) from error
