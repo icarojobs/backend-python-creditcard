@@ -67,6 +67,13 @@ Acessando detalhes técnicos da API:
 http://127.0.0.1:8000/redoc
 ```
 
+Acessando o PgAdmin (gestão do banco postgresql):
+```
+http://127.0.0.1:5050
+user: admin@admin.com
+pass: password
+```
+
 Acessando terminal do container:
 ```bash
 docker-compose exec -it app sh
