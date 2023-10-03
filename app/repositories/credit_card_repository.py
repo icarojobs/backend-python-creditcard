@@ -23,7 +23,6 @@ class CreditCardRepository:
         )
 
         try:
-            self.db_session = Session()
             self.db_session.add(credit_card_model)
             self.db_session.commit()
         except IntegrityError as e:

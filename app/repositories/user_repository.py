@@ -30,7 +30,6 @@ class UserRepository:
         )
 
         try:
-            # self.db_session = Session()
             self.db_session.add(user_model)
             self.db_session.commit()
         except IntegrityError as e:

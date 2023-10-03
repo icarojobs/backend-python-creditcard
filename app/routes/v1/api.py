@@ -68,7 +68,7 @@ def create_credit_card(credit_card: CreditCard, db_session: Session = Depends(ge
 
 
 @credit_card_router.get('/credit-cards')
-def create_credit_card_test(db_session: Session = Depends(get_db_session)):
+def create_credit_card(db_session: Session = Depends(get_db_session)):
     try:
         repository = CreditCardRepository(db_session=db_session)
         response = repository.get_credit_cards()
@@ -81,3 +81,8 @@ def create_credit_card_test(db_session: Session = Depends(get_db_session)):
         raise HTTPException(
             400, detail="Error when trying to get all credit cards"
         ) from error
+
+
+@credit_card_router.get('/credit-cards/{id}')
+def get_credit_card(id: int, db_session: Session = Depends(get_db_session)):
+    pass
