@@ -62,6 +62,11 @@ Acessando a documentação da API:
 http://127.0.0.1:8000/docs
 ```
 
+Acessando detalhes técnicos da API:
+```
+http://127.0.0.1:8000/redoc
+```
+
 Acessando terminal do container:
 ```bash
 docker-compose exec -it app sh
@@ -84,10 +89,15 @@ docker-compose exec app pytest
 
 Para criar novos arquivos de migração (migration), execute o seguinte comando:
 ```bash
+# Autogeração:
 docker-compose exec app alembic revision --autogenerate -m "migration name"
 
-# Exemplo usado nesse projeto:
+# Criação manual: 
+docker-compose exec app alembic revision -m "migration name"
+
+# Exemplos usado nesse projeto:
 docker-compose exec app alembic revision --autogenerate -m "add users table"
+docker-compose exec app alembic revision -m "add credit_cards table"
 ```
 
 Para aplicar uma migração (criar de fato no banco de dados), execute o seguinte comando:

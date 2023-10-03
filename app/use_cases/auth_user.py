@@ -16,9 +16,7 @@ from sqlalchemy.exc import IntegrityError
 from jose import jwt
 from jose import JWTError
 from app.models.user_model import UserModel
-from app.models.credit_card_model import CreditCardModel
 from app.database.schemas import User
-from app.database.schemas import CreditCard
 from passlib.context import CryptContext
 
 crypt_context = CryptContext(schemes=['sha256_crypt'])

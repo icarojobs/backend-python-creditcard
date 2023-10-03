@@ -57,14 +57,26 @@ def create_credit_card(credit_card: CreditCard, db_session: Session = Depends(ge
 
     return JSONResponse(
         status_code=status.HTTP_201_CREATED,
-        content={"status": True, "message": "User registered successfully!"}
+        content={"status": True, "message": "CreditCard added successfully!"}
     )
 
+
 @credit_card_router.get('/credit-cards')
-def get_credit_cards():
-    # business logic to get cards here...
+def get_credit_cards(db_session: Session = Depends(get_db_session)):
+    use_case = CreditCardUseCases(db_session=db_session)
+    result = use_case.get_credit_cards()
+    print('-----------------------------------------------------------')
+    print('credit_cards:')
+    print(result)
+    print('-----------------------------------------------------------')
+    #
+    # return JSONResponse(
+    #     status_code=status.HTTP_200_OK,
+    #     content={"status": True, "data": result}
+    # )
 
     return JSONResponse(
         status_code=status.HTTP_200_OK,
         content={"status": True, "data": [{"id": 1, "card_id": "xpto"}]}
     )
+

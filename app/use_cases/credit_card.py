@@ -39,3 +39,23 @@ class CreditCardUseCases:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Error when trying to store new credit_card.",
             ) from e
+
+    def get_credit_cards(self):
+        credit_card = CreditCard
+        result = self.db_session.query(credit_card).all()
+        # result = self.db_session.execute("select * from credit_cards")
+
+        print('-----------------------------------------------------')
+        print('result query:')
+        print(result)
+        print('-----------------------------------------------------')
+
+        return [{"msg": "ok"}]
+
+        # if result is None:
+        #     raise HTTPException(
+        #         status_code=status.HTTP_200_OK,
+        #         detail="No credit card found"
+        #     )
+        #
+        # return result
