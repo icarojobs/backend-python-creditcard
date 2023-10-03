@@ -72,6 +72,9 @@ Acessando o PgAdmin (gestão do banco postgresql):
 http://127.0.0.1:5050
 user: admin@admin.com
 pass: password
+
+Para conectar no serviço 'database' do docker, utilize o seguinte IP:
+host.docker.internal
 ```
 
 Acessando terminal do container:
