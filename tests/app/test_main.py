@@ -30,7 +30,7 @@ def test_register_new_user():
     assert response.status_code == status.HTTP_201_CREATED
     assert response.json() == {
       "status": True,
-      "message": "User registered successfully!"
+      "message": "User created successfully!"
     }
 
 

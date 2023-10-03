@@ -4,7 +4,7 @@ sys.path.append('..')
 
 
 from app.database.connection import Session
-from app.use_cases.auth_user import UserUseCases
+from app.repositories.user_repository import UserRepository
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends
 
@@ -23,5 +23,5 @@ def token_verifier(
         db_session=Depends(get_db_session),
         token=Depends(oauth_scheme)
 ):
-    use_case = UserUseCases(db_session=db_session)
-    use_case.verify_token(access_token=token)
+    repository = UserRepository(db_session=db_session)
+    repository.verify_token(access_token=token)

@@ -11,10 +11,10 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from app.depends import get_db_session
 from app.depends import token_verifier
-from app.use_cases.auth_user import UserUseCases
 from app.database.schemas import User
 from app.database.schemas import CreditCard
 from app.repositories.credit_card_repository import CreditCardRepository
+from app.repositories.user_repository import UserRepository
 
 user_router = APIRouter(prefix='/v1')
 credit_card_router = APIRouter(prefix='/v1', dependencies=[Depends(token_verifier)])
@@ -22,12 +22,12 @@ credit_card_router = APIRouter(prefix='/v1', dependencies=[Depends(token_verifie
 
 @user_router.post('/users')
 def user_register(user: User, db_session: Session = Depends(get_db_session)):
-    use_case = UserUseCases(db_session=db_session)
-    use_case.user_register(user=user)
+    repository = UserRepository(db_session=db_session)
+    repository.create_user(user=user)
 
     return JSONResponse(
         status_code=status.HTTP_201_CREATED,
-        content={"status": True, "message": "User registered successfully!"}
+        content={"status": True, "message": "User created successfully!"}
     )
 
 
@@ -36,14 +36,14 @@ def user_login(
         request_form_user: OAuth2PasswordRequestForm = Depends(),
         db_session: Session = Depends(get_db_session)
 ):
-    use_case = UserUseCases(db_session=db_session)
+    repository = UserRepository(db_session=db_session)
 
     user = User(
         username=request_form_user.username,
         password=request_form_user.password
     )
 
-    auth_data = use_case.user_login(user=user)
+    auth_data = repository.user_login(user=user)
 
     return JSONResponse(
         status_code=status.HTTP_200_OK,
