@@ -79,10 +79,29 @@ def create_credit_card(db_session: Session = Depends(get_db_session)):
         )
     except Exception as error:
         raise HTTPException(
-            400, detail="Error when trying to get all credit cards"
+            400,
+            detail="Error when trying to get all credit cards"
         ) from error
 
 
-@credit_card_router.get('/credit-cards/{id}')
-def get_credit_card(id: int, db_session: Session = Depends(get_db_session)):
-    pass
+@credit_card_router.get('/credit-cards/{card_id}')
+def get_credit_card(card_id: int, db_session: Session = Depends(get_db_session)):
+    try:
+        repository = CreditCardRepository(db_session=db_session)
+        response = repository.get_credit_card(card_id=card_id)
+
+        if response is None:
+            return JSONResponse(
+                status_code=status.HTTP_200_OK,
+                content={"status": False, "message": f"card_id {card_id} not found."}
+            )
+
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content={"status": True, "data": response}
+        )
+    except Exception as error:
+        raise HTTPException(
+            400,
+            detail=f"Error when trying to get card_id {card_id}"
+        ) from error

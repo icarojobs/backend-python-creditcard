@@ -44,3 +44,17 @@ class CreditCardRepository:
             }
             for row in query
         ]
+
+    def get_credit_card(self, card_id: int):
+        found_card = self.db_session.query(CreditCardModel).filter_by(id=card_id).first()
+
+        if found_card is None:
+            return None
+
+        return {
+            "id": found_card.id,
+            "holder": found_card.holder,
+            "number": found_card.number,
+            "exp_date": found_card.exp_date.strftime('%m/%Y'),
+            "cvv": found_card.cvv,
+        }
