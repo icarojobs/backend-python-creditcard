@@ -1,8 +1,14 @@
-import re
+import sys
+
+sys.path.append('../../')
+
 from pydantic import BaseModel
 from pydantic import field_validator
 from pydantic import ValidationError
-from typing import Union, List
+from app.helpers.custom_helpers import get_last_day
+from app.helpers.custom_helpers import fix_card_date
+from app.helpers.custom_helpers import is_valid_creditcard_date
+
 
 
 class User(BaseModel):
@@ -26,13 +32,18 @@ class CreditCard(BaseModel):
     @field_validator('exp_date')
     @classmethod
     def validate_exp_date(cls, value):
-        # business logic here...
         if value is None:
             raise ValidationError("The exp_date is required.")
 
-        # todo: get 30 (last day of month) dynamically
-        # return f"{value}/30"
-        return value
+        if len(value) != 7:
+            raise ValidationError("The exp_date format is invalid. The correct is dd/YYYY")
+
+        card_date = fix_card_date(value)
+
+        if not is_valid_creditcard_date(card_date):
+            raise ValidationError("The exp_date provided is expired.")
+
+        return card_date.strftime('%Y-%m-%d')
 
     @field_validator('holder')
     @classmethod
