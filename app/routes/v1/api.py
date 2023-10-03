@@ -11,7 +11,9 @@ from sqlalchemy.orm import Session
 from app.depends import get_db_session
 from app.depends import token_verifier
 from app.use_cases.auth_user import UserUseCases
+from app.use_cases.credit_card import CreditCardUseCases
 from app.database.schemas import User
+from app.database.schemas import CreditCard
 
 user_router = APIRouter(prefix='/v1')
 credit_card_router = APIRouter(prefix='/v1', dependencies=[Depends(token_verifier)])
@@ -47,6 +49,16 @@ def user_login(
         content={"status": True, "data": auth_data}
     )
 
+
+@credit_card_router.post('/credit-cards')
+def create_credit_card(credit_card: CreditCard, db_session: Session = Depends(get_db_session)):
+    use_case = CreditCardUseCases(db_session=db_session)
+    use_case.create_credit_card(credit_card=credit_card)
+
+    return JSONResponse(
+        status_code=status.HTTP_201_CREATED,
+        content={"status": True, "message": "User registered successfully!"}
+    )
 
 @credit_card_router.get('/credit-cards')
 def get_credit_cards():
