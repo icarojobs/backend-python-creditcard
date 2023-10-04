@@ -6,7 +6,8 @@ sys.path.append('../../')
 from pydantic import BaseModel
 from pydantic import field_validator
 from pydantic import ValidationError
-from app.helpers.custom_helpers import prepare_credit_card_date
+from fastapi.exceptions import HTTPException
+from fastapi import status
 
 
 class User(BaseModel):
@@ -17,7 +18,11 @@ class User(BaseModel):
     @classmethod
     def validate_username(cls, value):
         if '@' in value:
-            raise ValidationError("The username format is invalid. Dont use email to register.")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="The username format is invalid. Dont use email to register.",
+            )
+
         return value
 
 
@@ -27,12 +32,21 @@ class CreditCard(BaseModel):
     number: str
     cvv: int
 
-    @field_validator('holder')
+    @field_validator("holder")
     @classmethod
     def validate_holder(cls, value):
-        # business logic here...
         if value is None:
-            raise ValidationError("The holder is required.")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="The holder is required.",
+            )
+
+        if len(value) < 2:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="The holder field needs to be equals or greater 2 characters.",
+            )
+
         return value
 
     @field_validator('number')
