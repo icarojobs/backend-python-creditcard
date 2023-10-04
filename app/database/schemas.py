@@ -1,3 +1,4 @@
+from app.helpers.custom_helpers import dd
 import sys
 
 sys.path.append('../../')
@@ -5,10 +6,7 @@ sys.path.append('../../')
 from pydantic import BaseModel
 from pydantic import field_validator
 from pydantic import ValidationError
-from app.helpers.custom_helpers import get_last_day
-from app.helpers.custom_helpers import fix_card_date
-from app.helpers.custom_helpers import is_valid_creditcard_date
-
+from app.helpers.custom_helpers import prepare_credit_card_date
 
 
 class User(BaseModel):
@@ -28,22 +26,6 @@ class CreditCard(BaseModel):
     holder: str
     number: str
     cvv: int
-
-    @field_validator('exp_date')
-    @classmethod
-    def validate_exp_date(cls, value):
-        if value is None:
-            raise ValidationError("The exp_date is required.")
-
-        if len(value) != 7:
-            raise ValidationError("The exp_date format is invalid. The correct is dd/YYYY")
-
-        card_date = fix_card_date(value)
-
-        if not is_valid_creditcard_date(card_date):
-            raise ValidationError("The exp_date provided is expired.")
-
-        return card_date.strftime('%Y-%m-%d')
 
     @field_validator('holder')
     @classmethod

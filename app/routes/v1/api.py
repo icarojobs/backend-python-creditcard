@@ -61,10 +61,8 @@ def create_credit_card(credit_card: CreditCard, db_session: Session = Depends(ge
             status_code=status.HTTP_201_CREATED,
             content={"status": True, "message": "CreditCard created successfully!"}
         )
-    except Exception as error:
-        raise HTTPException(
-            400, detail="Error when trying create new credit card."
-        ) from error
+    finally:
+        pass
 
 
 @credit_card_router.get('/credit-cards')
