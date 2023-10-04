@@ -25,6 +25,7 @@ def upgrade() -> None:
                     sa.Column('holder', sa.String(), nullable=False),
                     sa.Column('number', sa.String(), nullable=False),
                     sa.Column('cvv', sa.Integer(), nullable=True),
+                    sa.Column('brand', sa.String(), nullable=False),
                     sa.PrimaryKeyConstraint('id')
                     )
 

@@ -10,6 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from fastapi.exceptions import HTTPException
 from fastapi import status
 from app.helpers.custom_helpers import prepare_credit_card_date
+from creditcard import CreditCard as CardValidator
 
 
 class CreditCardRepository:
@@ -17,6 +18,9 @@ class CreditCardRepository:
         self.db_session = db_session
 
     def create_credit_card(self, credit_card: CreditCard):
+        cc = CardValidator(credit_card.number)
+        credit_card.brand = cc.get_brand()
+
         card_date = prepare_credit_card_date(credit_card.exp_date)
 
         if not card_date:
@@ -29,7 +33,8 @@ class CreditCardRepository:
             exp_date=card_date,
             holder=credit_card.holder,
             number=credit_card.number,
-            cvv=credit_card.cvv
+            cvv=credit_card.cvv,
+            brand=credit_card.brand
         )
 
         try:

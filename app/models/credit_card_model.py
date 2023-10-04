@@ -4,7 +4,6 @@ sys.path.append('../../')
 
 from sqlalchemy import Column, Integer, String, Date
 from app.database.base import Base
-from typing import Union
 
 
 class CreditCardModel(Base):
@@ -14,3 +13,4 @@ class CreditCardModel(Base):
     holder = Column('holder', String, nullable=False)
     number = Column('number', String, nullable=False)
     cvv = Column('cvv', Integer, nullable=True)
+    brand = Column('brand', String, nullable=False)

@@ -6,8 +6,11 @@ sys.path.append('../../')
 from pydantic import BaseModel
 from pydantic import field_validator
 from pydantic import ValidationError
+from pydantic import Field
+from typing import Any
 from fastapi.exceptions import HTTPException
 from fastapi import status
+from creditcard import CreditCard as CardValidator
 
 
 class User(BaseModel):
@@ -31,6 +34,7 @@ class CreditCard(BaseModel):
     holder: str
     number: str
     cvv: int
+    brand: Any = Field(default="unknown", repr=False)
 
     @field_validator("holder")
     @classmethod
@@ -52,20 +56,35 @@ class CreditCard(BaseModel):
     @field_validator('number')
     @classmethod
     def validate_number(cls, value):
-        # business logic here...
-        if value is None:
-            raise ValidationError("The number is required.")
+        cc = CardValidator(value)
+
+        if value is None or len(value) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="The card number is required.",
+            )
+
+        if not cc.is_valid():
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="The card number is invalid.",
+            )
+
         return value
 
     @field_validator('cvv')
     @classmethod
     def validate_cvv(cls, value):
         return value
-        # business logic here...
-        # if value is None:
-        #     return value
 
-        # if len(value) >= 3:
-        #     return value
-        # else:
-        #     raise ValidationError("The cvv field needs 3 or 4 digits.")
+    # @field_validator('brand')
+    # @classmethod
+    # def validate_brand(cls, value):
+    #     cc = CardValidator(value)
+    #     if cc.get_brand() is None or len(cc.get_brand()) == 0:
+    #         raise HTTPException(
+    #             status_code=status.HTTP_400_BAD_REQUEST,
+    #             detail="The card brand is invalid.",
+    #         )
+    #
+    #     return cc.get_brand()
