@@ -7,6 +7,7 @@ UTC = pytz.utc
 
 import random
 import string
+from cryptography.fernet import Fernet
 from fastapi.exceptions import HTTPException
 from fastapi import status
 from typing import Union
@@ -66,3 +67,21 @@ def prepare_credit_card_date(value: str) -> Union[date, bool]:
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The exp_date format is invalid. The correct is dd/YYYY",
         ) from e
+
+
+def encrypt_credit_card(card_number: str) -> dict:
+    key = Fernet.generate_key()
+    fernet = Fernet(key)
+    encryption_card_number = fernet.encrypt(card_number.encode())
+
+    return {
+        "encryption_key": key,
+        "encryption_card_number": encryption_card_number
+    }
+
+
+def decrypt_credit_card(encryption_key, encryption_card_number) -> str:
+    key = encryption_key
+    fernet = Fernet(key)
+    card = encryption_card_number
+    return fernet.decrypt(card).decode()

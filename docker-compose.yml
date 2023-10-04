@@ -25,15 +25,15 @@ services:
       - 'database:/var/lib/postgresql/data'
     networks:
       - maistodos
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}'
-      PGADMIN_DEFAULT_PASSWORD: '${POSTGRES_PASSWORD}'
-    ports:
-      - 5050:80
-    depends_on:
-      - database
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: '${PGADMIN_EMAIL}'
+#      PGADMIN_DEFAULT_PASSWORD: '${POSTGRES_PASSWORD}'
+#    ports:
+#      - 5050:80
+#    depends_on:
+#      - database
 networks:
     maistodos:
         driver: bridge

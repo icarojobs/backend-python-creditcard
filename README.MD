@@ -13,6 +13,8 @@ O objetivo desse repositório é realizar o teste em Python (Programador Backend
  - python-jose (pra trabalhar com JWT)
  - python-multipart (pra trabalhar com form de login)
  - pytest (para testes unitários e de integração)
+ - pydantic (para validação de dados em models)
+ - cryptography (para guardar número de cartões criptografados)
 
 A escolha de montar o ambiente de desenvolvimento utilizando Docker com Docker Compose foi por basicamente 2 motivo: O primeiro motivo é que o meu ambiente de desenvolvimento vai ser muito parecido com o de produção e o segundo motivo é que meus colegas de trabalho podem executar esse ambiente facilmente se estiverem em um ambiente linux/unix/mac caso tenham do `Docker` + `docker-compose` devidamente instalados.
 
@@ -24,7 +26,25 @@ Também optei por utilizar um ORM, no caso [SqlAlchemy](https://www.sqlalchemy.o
 
 A opção de escolher o JWT para realizar autenticação é pelo fato de ter uma implementação simples e extremamente segura.
 
-### AMBIENTE DE DESENVOLVIMENTO
+---
+
+### PASSOS RÁPIDOS PARA AMBIENTAÇÃO
+1. Clone o projeto
+2. Faça uma cópia do arquivo `.env.example` para `.env`
+3. Com `docker` e `docker-compose` devidamente instalados, execute o comando:
+```bash
+docker-compose build --no-cache && docker-compose up --force-recreate -d
+```
+4. Rode as migrations para popular as tabelas no banco de dados com o seguinte comando:
+```bash
+docker-compose exec app alembic upgrade head
+```
+5. Acesse a documentação da API em [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) 
+6. Divirta-se!
+
+---
+
+### DETALHES DO AMBIENTE DE DESENVOLVIMENTO
 Na raiz do projeto você vai encontrar o arquivo `docker-compose.yml` e `Dockerfile` que são os responsáveis por criar toda estrutura necessária para o desenvolvimento desse projeto.
 Antes de iniciar o projeto, faça uma cópia do arquivo `.env.example` para `.env` e gere sua criptografia HS256.
 
@@ -38,7 +58,7 @@ Gerando criptografia para adicionar em `SECRET_KEY` do `.env`:
 OBS: Caso queira gerar via linha de comando, basta digitar:
 $ openssl rand -hex 64
 
-Pra fins de teste, já vou deixar a que utilizei no arquivo .env.example, mas fique a vontade pra trocar.
+ATENÇÃO: Pra fim de testes rápido para validar o funcionamento do projeto, eu já deixei meu .env no .env.example, mas uma aplicação real, eu iria remover dados sensíveis.
 ```
 
 Executando container:
@@ -139,3 +159,4 @@ curl -X 'GET' \
 Se testar a API em um REST-Client (Postman, Insomnia, etc) funciona normalmente, bastando cadastrar o usuário, fazer o login e, em seguida, consumir o endpoint `[GET] /v1/credit-cards`
 
 2. Nos erros de validação eu gostaria muito de utilizar o `ValidationError` do `pydantic`, mas por algum motivo (que não tenho conhecimento no momento), exibe um erro de contrutor. Tentei mudar o decorator para `@staticmethod` e também remove-lo e não funcionou. Pra não interromper o projeto, eu troque a exception de `ValidationError` para `HTTPException` do `fastapi`.
+3. A minha intenção exibir os cartões no padrão `*******1234`, onde `1234` era os 4 últimos dígitos do cartão. Mas não tive tempo pra finalizar essa implementação (faltou um pouco mais de estudo na forma de como guardar e retornar binários no postgres)

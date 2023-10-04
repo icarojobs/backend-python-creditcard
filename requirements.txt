@@ -10,3 +10,4 @@ python-multipart
 pytest
 httpx
 pytz
+cryptography

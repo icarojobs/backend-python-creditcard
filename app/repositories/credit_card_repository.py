@@ -10,6 +10,7 @@ from sqlalchemy.exc import IntegrityError
 from fastapi.exceptions import HTTPException
 from fastapi import status
 from app.helpers.custom_helpers import prepare_credit_card_date
+from app.helpers.custom_helpers import encrypt_credit_card
 from creditcard import CreditCard as CardValidator
 
 
@@ -29,12 +30,15 @@ class CreditCardRepository:
                 detail="The exp_date is invalid.",
             )
 
+        encrypted_credit_card = encrypt_credit_card(credit_card.number)
+
         credit_card_model = CreditCardModel(
             exp_date=card_date,
             holder=credit_card.holder,
-            number=credit_card.number,
+            number=encrypted_credit_card['encryption_card_number'],
             cvv=credit_card.cvv,
-            brand=credit_card.brand
+            brand=credit_card.brand,
+            encryption_key=encrypted_credit_card['encryption_key']
         )
 
         try:
@@ -43,7 +47,7 @@ class CreditCardRepository:
         except IntegrityError as e:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Integrity error: {e.detail}",
+                detail="Integrity error when trying store card. Check your body data and try again.",
             ) from e
 
     def get_credit_cards(self):

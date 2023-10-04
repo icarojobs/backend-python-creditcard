@@ -14,3 +14,4 @@ class CreditCardModel(Base):
     number = Column('number', String, nullable=False)
     cvv = Column('cvv', Integer, nullable=True)
     brand = Column('brand', String, nullable=False)
+    encryption_key = Column('encryption_key', String, nullable=False)
