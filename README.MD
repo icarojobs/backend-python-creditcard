@@ -87,6 +87,8 @@ Acessando detalhes técnicos da API:
 http://127.0.0.1:8000/redoc
 ```
 
+`Atenção:` Caso queira utilizar o postman como RESTClient deixei todas as collection que utilizei em `docs/postman-collection`
+
 Acessando o PgAdmin (gestão do banco postgresql):
 Caso queira acessar o `pgadmin4`, basta parar seus containers, acessar o arquivo `docker-compose.yml`, remover os comentários, subir os containers novamente.
 ```
