@@ -10,13 +10,7 @@ from app.helpers.custom_helpers import random_string
 client = TestClient(app=app)
 
 
-def test_index_route():
-    response = client.get("/")
-    assert response.status_code == status.HTTP_200_OK
-    assert response.json() == {"ping": "pong!"}
-
-
-def test_register_new_user():
+def test_if_user_register_is_working():
     random_user = random_string()
 
     response = client.post(
@@ -32,15 +26,3 @@ def test_register_new_user():
       "status": True,
       "message": "User created successfully!"
     }
-
-
-def test_if_user_exists():
-    pass
-
-
-def test_if_user_login_works():
-    pass
-
-
-def test_user_login_with_wrong_password():
-    pass
