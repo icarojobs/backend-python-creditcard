@@ -1,4 +1,3 @@
-from app.helpers.custom_helpers import dd
 import sys
 
 sys.path.append('../../')

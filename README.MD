@@ -163,3 +163,4 @@ Se testar a API em um REST-Client (Postman, Insomnia, etc) funciona normalmente,
 
 2. Nos erros de validação eu gostaria muito de utilizar o `ValidationError` do `pydantic`, mas por algum motivo (que não tenho conhecimento no momento), exibe um erro de contrutor. Tentei mudar o decorator para `@staticmethod` e também remove-lo e não funcionou. Pra não interromper o projeto, eu troque a exception de `ValidationError` para `HTTPException` do `fastapi`.
 3. A minha intenção exibir os cartões no padrão `*******1234`, onde `1234` era os 4 últimos dígitos do cartão. Mas não tive tempo pra finalizar essa implementação (faltou um pouco mais de estudo na forma de como guardar e retornar binários no postgres)
+4. Eu queria ter mais tempo pra criar mais testes unitários para algumas funcionalidades (tipo testar todas as funções do `custom_helpers`, etc).
