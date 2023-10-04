@@ -137,3 +137,5 @@ curl -X 'GET' \
   -H 'Authorization: Bearer undefined'
 ```
 Se testar a API em um REST-Client (Postman, Insomnia, etc) funciona normalmente, bastando cadastrar o usuário, fazer o login e, em seguida, consumir o endpoint `[GET] /v1/credit-cards`
+
+2. Nos erros de validação eu gostaria muito de utilizar o `ValidationError` do `pydantic`, mas por algum motivo (que não tenho conhecimento no momento), exibe um erro de contrutor. Tentei mudar o decorator para `@staticmethod` e também remove-lo e não funcionou. Pra não interromper o projeto, eu troque a exception de `ValidationError` para `HTTPException` do `fastapi`.
