@@ -88,6 +88,7 @@ http://127.0.0.1:8000/redoc
 ```
 
 Acessando o PgAdmin (gestão do banco postgresql):
+Caso queira acessar o `pgadmin4`, basta parar seus containers, acessar o arquivo `docker-compose.yml`, remover os comentários, subir os containers novamente.
 ```
 http://127.0.0.1:5050
 user: admin@admin.com
